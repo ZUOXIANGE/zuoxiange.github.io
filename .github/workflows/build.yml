@@ -24,7 +24,7 @@ jobs:
           extended: true  # 版本从 .hugo-version 文件读取
 
       - name: Cache Hugo resources
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: resources
           key: ${{ runner.os }}-hugo-${{ hashFiles('config/**') }}
