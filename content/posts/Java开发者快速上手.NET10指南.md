@@ -1,7 +1,9 @@
 +++
 date = '2026-08-18T17:28:12+08:00'
-draft = true
+draft = false
 title = 'Java开发者快速上手.NET10指南'
+categories = ['后端开发']
+tags = ['.NET', 'ASP.NET Core', 'Java', 'C#', '后端开发']
 +++
 
 # Java Spring Boot 开发者快速上手 ASP.NET Core 10 指南
