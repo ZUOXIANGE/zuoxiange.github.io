@@ -75,6 +75,28 @@
       });
     </script>
   {{ end }}
+  {{/* 兼容 ```mermaid 代码围栏：无需 {{< mermaid >}} shortcode 也能渲染 */}}
+  {{ if in .Content "language-mermaid" }}
+    {{ $mermaidLib := resources.Get "lib/mermaid/mermaid.min.js" }}
+    {{ $mermaidConfig := resources.Get "js/mermaid.js" }}
+    {{ $mermaidConfig := $mermaidConfig | resources.Minify }}
+    {{ $mermaidJS := slice $mermaidLib $mermaidConfig | resources.Concat "js/mermaid-fenced.bundle.js" | resources.Fingerprint (.Site.Params.fingerprintAlgorithm | default "sha512") }}
+    <script
+      type="text/javascript"
+      src="{{ $mermaidJS.RelPermalink }}"
+      integrity="{{ $mermaidJS.Data.Integrity }}"></script>
+    <script>
+      // 将 pre > code.language-mermaid 转换成主题可识别的 pre.mermaid，
+      // 随后由 appearance.js 的 DOMContentLoaded 处理逻辑自动渲染
+      (function () {
+        document.querySelectorAll("pre > code.language-mermaid").forEach(function (code) {
+          var pre = code.parentNode;
+          pre.classList.add("mermaid", "not-prose");
+          pre.textContent = code.textContent;
+        });
+      })();
+    </script>
+  {{ end }}
   {{/* Extend footer - eg. for extra scripts, etc. */}}
   {{ if templates.Exists "partials/extend-footer.html" }}
     {{ partialCached "extend-footer.html" . }}
