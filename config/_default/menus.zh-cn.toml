@@ -19,3 +19,10 @@
   name = '标签'
   pageRef = '/tags'
   weight = 40
+
+# -- 页脚菜单 --
+
+[[footer]]
+  name = 'RSS'
+  url = 'https://zuoxiange.github.io/index.xml'
+  weight = 10

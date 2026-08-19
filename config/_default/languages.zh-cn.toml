@@ -11,8 +11,10 @@ weight = 1
 
 [params.author]
   name = 'ZuoXiang'
+  image = 'img/avatar.png'
   headline = '软件工程师'
   bio = '记录技术思考与学习笔记'
   links = [
     { github = 'https://github.com/zuoxiange' },
+    { rss = 'https://zuoxiange.github.io/index.xml' },
   ]

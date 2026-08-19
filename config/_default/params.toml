@@ -8,11 +8,24 @@ autoSwitchAppearance = true
 enableSearch = true
 enableCodeCopy = true
 enableA11y = true
+enableStructuredBreadcrumbs = true
 
-# mainSections = ['posts']
+mainSections = ['posts']
+
+# 站点级背景（backgroundCanvas 将其固定为全站背景）
+defaultBackgroundImage = 'img/site-background.svg'
+backgroundCanvas = true
+# 社交分享默认图（OG / Twitter Card，无特色图时使用）
+defaultSocialImage = 'img/banner.png'
+
+# 顶部导航高亮当前区域 / 智能目录
+highlightCurrentMenuArea = true
+smartTOC = true
+smartTOCHideUnfocusedChildren = false
 
 [header]
   layout = 'basic' # valid options: basic, fixed, fixed-fill, fixed-gradient, fixed-fill-blur, floating
+  mobileMenuStyle = 'dropdown' # valid options: fullscreen, dropdown
 
 [footer]
   showMenu = true
@@ -32,7 +45,7 @@ enableA11y = true
 
 [article]
   showDate = true
-  showDateUpdated = false
+  showDateUpdated = true
   showAuthor = true
   showHero = false
   showBreadcrumbs = true
@@ -41,22 +54,32 @@ enableA11y = true
   showPagination = true
   showReadingTime = true
   showReadingProgress = true
+  showZenMode = true
   showTableOfContents = true
   showTaxonomies = true
   showCategories = true
   showTags = true
   showWordCount = true
+  # 相关文章（基于 related 配置）
+  showRelatedContent = true
+  relatedContentLimit = 9
+  # 系列文章（文章 front matter 中声明 series 后生效）
+  seriesOpened = false
 
 [list]
   showBreadcrumbs = false
   showCards = true
+  showSummary = true
   groupByYear = true
   cardView = true
   orderByWeight = false
+  featureImageHover = true
 
 [taxonomy]
   showTermCount = true
+  cardView = true
 
 [term]
   showTableOfContents = false
   cardView = true
+  groupByYear = true
