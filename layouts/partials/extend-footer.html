@@ -1,0 +1,43 @@
+{{/* 站点级自定义：为代码块自动注入语言标签栏（不修改主题） */}}
+<script>
+  (function () {
+    var LANG_NAMES = {
+      csharp: "C#", cs: "C#", java: "Java", xml: "XML", html: "HTML",
+      css: "CSS", javascript: "JavaScript", js: "JS", typescript: "TypeScript",
+      ts: "TS", json: "JSON", yaml: "YAML", yml: "YAML", toml: "TOML",
+      bash: "Bash", sh: "Shell", shell: "Shell", powershell: "PowerShell",
+      pwsh: "PowerShell", python: "Python", py: "Python", go: "Go",
+      rust: "Rust", rs: "Rust", kotlin: "Kotlin", kt: "Kotlin",
+      swift: "Swift", sql: "SQL", dockerfile: "Dockerfile", ini: "INI",
+      markdown: "Markdown", md: "Markdown", text: "Text"
+    };
+
+    function langLabel(lang) {
+      if (!lang) return "";
+      return LANG_NAMES[lang.toLowerCase()] || lang.toUpperCase();
+    }
+
+    function decorate() {
+      document.querySelectorAll(".highlight-wrapper").forEach(function (wrapper) {
+        if (wrapper.querySelector(".codeblock-title")) return;
+        var code = wrapper.querySelector("code[data-lang]");
+        if (!code) return;
+        var label = langLabel(code.getAttribute("data-lang"));
+        if (!label) return;
+        var title = document.createElement("div");
+        title.className = "codeblock-title";
+        var span = document.createElement("span");
+        span.className = "codeblock-lang";
+        span.textContent = label;
+        title.appendChild(span);
+        wrapper.insertBefore(title, wrapper.firstChild);
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", decorate);
+    } else {
+      decorate();
+    }
+  })();
+</script>

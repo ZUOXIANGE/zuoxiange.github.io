@@ -20,6 +20,10 @@
 
 [highlight]
   noClasses = false
+  # 开启行号；lineNumbersInTable=false 使用内联行号，
+  # 避免表格模式下 .lntable{overflow:hidden} 导致长代码被裁切
+  lineNos = true
+  lineNumbersInTable = false
 
 [tableOfContents]
   startLevel = 2
