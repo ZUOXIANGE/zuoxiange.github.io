@@ -2,6 +2,7 @@
 date = '2026-08-19T17:45:10+08:00'
 draft = false
 title = 'Git Hooks 应用详解'
+description = '详解 Git Hooks 的工作原理与常用钩子类型，并针对 Java、.NET 和 JavaScript/TypeScript 项目给出 pre-commit 自动化与代码质量拦截的最佳实践方案。'
 categories = ['开发工具']
 tags = ['Git', 'Git Hooks', 'Husky', 'Husky.Net', 'Lefthook', 'Commitlint', '工程化']
 +++

@@ -2,6 +2,7 @@
 date = '2026-08-18T17:28:12+08:00'
 draft = false
 title = 'Java开发者快速上手.NET10指南'
+description = '专为 Java Spring Boot 开发者编写的 .NET 10 (ASP.NET Core) 快速上手指南，跳过基础语法，直接切入架构映射、核心差异与 .NET 的独特优势。'
 categories = ['后端开发']
 tags = ['.NET', 'ASP.NET Core', 'Java', 'C#', '后端开发']
 +++

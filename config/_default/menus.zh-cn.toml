@@ -20,6 +20,11 @@
   pageRef = '/tags'
   weight = 40
 
+[[main]]
+  name = '关于'
+  pageRef = '/about'
+  weight = 50
+
 # -- 页脚菜单 --
 
 [[footer]]
