@@ -1,7 +1,9 @@
 +++
 date = '2026-08-19T17:47:45+08:00'
-draft = true
+draft = false
 title = 'API路由命名规范'
+categories = ['后端开发']
+tags = ['API', 'RESTful', 'Java', 'Spring Boot', '开发规范']
 +++
 
 ## API路由命名规范
