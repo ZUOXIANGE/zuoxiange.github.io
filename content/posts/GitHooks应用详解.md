@@ -7,8 +7,6 @@ categories = ['开发工具']
 tags = ['Git', 'Git Hooks', 'Husky', 'Husky.Net', 'Lefthook', 'Commitlint', '工程化']
 +++
 
-# Git Hooks 应用详解
-
 Git Hooks 是 Git 在特定事件发生之前或之后执行的脚本，是实现研发流程自动化、代码质量控制和规范落地的关键工具。通过 Git Hooks，我们可以在代码提交（Commit）、推送（Push）等环节自动执行代码检查、格式化、单元测试等任务，将问题拦截在开发本地。
 
 本文档详细介绍 Git Hooks 的工作原理，并分别针对 Java、.NET 和 JavaScript/TypeScript 项目提供最佳实践方案。

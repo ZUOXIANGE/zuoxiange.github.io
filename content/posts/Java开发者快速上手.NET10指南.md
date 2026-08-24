@@ -7,8 +7,6 @@ categories = ['后端开发']
 tags = ['.NET', 'ASP.NET Core', 'Java', 'C#', '后端开发']
 +++
 
-# Java Spring Boot 开发者快速上手 ASP.NET Core 10 指南
-
 > 本文专为拥有丰富 Java Spring Boot 开发经验，希望快速掌握并评估 .NET 10 (ASP.NET Core) 的开发者编写。我们将跳过基础编程概念，直接切入核心差异、架构映射以及 .NET 10 的独特优势。
 
 ## 1. 为什么要关注 .NET 10？
