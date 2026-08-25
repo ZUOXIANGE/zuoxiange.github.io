@@ -2,6 +2,8 @@
 date = '2026-08-19T17:47:45+08:00'
 draft = false
 title = 'API路由命名规范'
+slug = 'api-route-naming-conventions'
+aliases = ['/posts/api路由命名规范/']
 description = '总结 RESTful API 路由命名的核心原则：用复数名词标识资源、保持 kebab-case 一致、用 HTTP 方法表达操作，并给出 Java/Spring Boot 实践示例。'
 categories = ['后端开发']
 tags = ['API', 'RESTful', 'Java', 'Spring Boot', '开发规范']

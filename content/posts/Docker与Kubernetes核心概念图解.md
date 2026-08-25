@@ -2,6 +2,8 @@
 date = '2026-08-24T17:46:57+08:00'
 draft = false
 title = 'Docker与Kubernetes核心概念图解'
+slug = 'docker-kubernetes-core-concepts'
+aliases = ['/posts/docker与kubernetes核心概念图解/']
 description = '通过图解方式剖析 Docker 与 Kubernetes 的核心概念：镜像与容器、控制平面架构、Pod、Deployment、Service、Ingress 以及存储配置对象的关系与设计哲学。'
 categories = ['后端开发']
 tags = ['Docker', 'Kubernetes', 'K8s', '容器', '云原生']

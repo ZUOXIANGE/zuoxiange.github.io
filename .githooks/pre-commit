@@ -1,0 +1,5 @@
+#!/bin/sh
+# 校验文章 front matter 必填字段，未通过则阻止提交
+# 检查脚本: scripts/check-frontmatter.ps1
+# 启用方式: git config core.hooksPath .githooks
+pwsh -NoProfile -File scripts/check-frontmatter.ps1 || exit 1

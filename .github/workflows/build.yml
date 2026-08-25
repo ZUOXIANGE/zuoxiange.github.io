@@ -31,5 +31,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-hugo-
 
+      - name: Check front matter required fields
+        shell: pwsh
+        run: ./scripts/check-frontmatter.ps1
+
       - name: Build
         run: hugo --minify --gc --cleanDestinationDir
