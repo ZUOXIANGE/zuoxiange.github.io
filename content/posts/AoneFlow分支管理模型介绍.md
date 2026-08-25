@@ -23,7 +23,7 @@ AoneFlow 是阿里巴巴内部广泛使用的分支管理模型，其核心特�
 
 ---
 
-### 完整生命周期流程图 （Mermaid）
+### 完整生命周期流程图
 
 ```mermaid
 timeline
@@ -33,9 +33,9 @@ timeline
         开发与自测 : 在 feature 分支上<br>提交代码
         提测/集成 : 将 feature 分支合并到<br>release/test 分支部署测试环境
     section 测试阶段Bug修改
-        测试发现Bug : 在 release/test 分支上<br>直接修复（提交代码）
-        回归验证 : 重新部署 release/test<br>分支进行验证
-        发布准备 : 将修复后的 feature 合并到<br>release/prod 分支部署预发环境
+        测试发现Bug : 回到 feature 分支<br>上修复（提交代码）
+        提测验证 : 将修复合并到 release/test<br>分支重新部署验证
+        发布准备 : 修复随 feature 合并到<br>release/prod 分支部署预发环境
     section 生产环境紧急修复
         发现紧急故障 : 从主干（master）<br>拉取 hotfix 分支
         紧急修复 : 在 hotfix 分支修复<br>并部署测试环境验证
@@ -64,9 +64,9 @@ timeline
 
 在测试环境（`release/test`）验证时发现“优惠券计算金额错误”。
 
-1.  **直接在发布分支修复**：AoneFlow 允许开发者在对应的发布分支（`release/test`）上直接提交代码来修复 Bug。这种做法比在 feature 分支修复再合并更快，适合测试阶段的快速迭代。
-2.  **同步回特性分支（重要）**：**修复完成后，务必将改动同步合并回 `feature/order-coupon` 分支**。这样能保证后续从主干拉取新分支时，不会丢失这个 Bugfix。
-3.  **继续推进上线**：将包含修复的 `feature/order-coupon` 重新合并到 `release/prod`，准备上线。
+1.  **回到特性分支修复**：AoneFlow 的一切代码修改都应发生在特性分支上，在 `feature/order-coupon` 分支上完成 Bug 修复。**不要直接在 `release/test` 上提交代码**——发布分支只是特性的“组装产物”，一旦因剔除某个功能而重建 release 分支，直接提交的修复就会随分支删除而丢失。
+2.  **合并到测试发布分支验证**：将修复提交合并到 `release/test`，重新部署测试环境供 QA 回归验证。
+3.  **继续推进上线**：测试通过后，将包含修复的 `feature/order-coupon` 再合并到 `release/prod`，准备上线。
 
 ---
 
