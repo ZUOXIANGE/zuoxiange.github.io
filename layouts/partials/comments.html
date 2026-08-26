@@ -1,0 +1,54 @@
+<!-- giscus 评论（GitHub Discussions），主题跟随 Blowfish 明暗切换 -->
+<div id="giscus-comments" class="w-full"></div>
+<script>
+  (function () {
+    function currentTheme() {
+      return document.documentElement.classList.contains("dark") ? "dark_dimmed" : "light";
+    }
+
+    function sendGiscusMessage(message) {
+      var iframe = document.querySelector("iframe.giscus-frame");
+      if (iframe) {
+        iframe.contentWindow.postMessage({ giscus: message }, "https://giscus.app");
+      }
+    }
+
+    var giscusScript = null;
+    var lastTheme = currentTheme();
+
+    // Blowfish 明暗切换（含系统自动切换）都是增删 html 元素的 dark 类，监听即可同步
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.attributeName === "class") {
+          var theme = currentTheme();
+          if (theme === lastTheme) return;
+          lastTheme = theme;
+          // 懒加载 iframe 尚未创建时，更新脚本属性以保证创建时使用当前主题
+          if (giscusScript) {
+            giscusScript.setAttribute("data-theme", theme);
+          }
+          sendGiscusMessage({ setConfig: { theme: theme } });
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+    giscusScript = document.createElement("script");
+    giscusScript.src = "https://giscus.app/client.js";
+    giscusScript.async = true;
+    giscusScript.crossOrigin = "anonymous";
+    giscusScript.setAttribute("data-repo", "ZUOXIANGE/zuoxiange.github.io");
+    giscusScript.setAttribute("data-repo-id", "MDEwOlJlcG9zaXRvcnkxMzQ1OTE0ODU=");
+    giscusScript.setAttribute("data-category", "Announcements");
+    giscusScript.setAttribute("data-category-id", "DIC_kwDOCAWz_c4DENFg");
+    giscusScript.setAttribute("data-mapping", "pathname");
+    giscusScript.setAttribute("data-strict", "0");
+    giscusScript.setAttribute("data-reactions-enabled", "1");
+    giscusScript.setAttribute("data-emit-metadata", "0");
+    giscusScript.setAttribute("data-input-position", "top");
+    giscusScript.setAttribute("data-theme", lastTheme);
+    giscusScript.setAttribute("data-lang", "zh-CN");
+    giscusScript.setAttribute("data-loading", "lazy");
+    document.getElementById("giscus-comments").appendChild(giscusScript);
+  })();
+</script>

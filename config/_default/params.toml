@@ -46,7 +46,7 @@ smartTOCHideUnfocusedChildren = false
 [article]
   showDate = true
   showDateUpdated = true
-  showAuthor = true
+  showAuthor = false
   showHero = false
   showBreadcrumbs = true
   showDraftLabel = true
@@ -60,9 +60,11 @@ smartTOCHideUnfocusedChildren = false
   showCategories = true
   showTags = true
   showWordCount = true
+  # 文章评论（giscus，见 layouts/partials/comments.html）
+  showComments = true
   # 相关文章（基于 related 配置）
   showRelatedContent = true
-  relatedContentLimit = 9
+  relatedContentLimit = 2
   # 系列文章（文章 front matter 中声明 series 后生效）
   seriesOpened = false
 

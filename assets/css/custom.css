@@ -199,3 +199,76 @@
   padding-inline: 1em 0.9em;
   color: #7f848e;
 }
+
+/* ============================================================
+   giscus 评论框：与文章内容列同宽（容器已受 max-w-prose 约束）
+   ============================================================ */
+#giscus-comments,
+#giscus-comments .giscus,
+#giscus-comments .giscus-frame {
+  width: 100%;
+}
+
+/* ============================================================
+   文章宽度：由 max-w-prose(65ch) 放宽到 120ch
+   （标题/正文/页脚三处同步，分页、相关文章、评论随之对齐）
+   ============================================================ */
+#single_header,
+.article-content,
+article > footer {
+  max-width: 120ch;
+}
+
+/* ============================================================
+   相关文章卡片：压缩高度
+   （摘要截断为 2 行；隐藏分类/标签胶囊，胶囊换行是主要高度来源）
+   ============================================================ */
+.article-link--related .article-link__summary {
+  -webkit-line-clamp: 2;
+}
+.article-link--related .text-sm a[href^="/categories/"],
+.article-link--related .text-sm a[href^="/tags/"] {
+  display: none;
+}
+
+/* ============================================================
+   桌面端目录：悬浮覆盖在文章右上角，不挤占文章阅读宽度
+   （外层容器脱离 flex 流、固定定位；展开/收起均不影响文章布局。
+    移动端布局不受影响，仅作用于 lg 及以上断点。）
+   ============================================================ */
+@media (min-width: 1024px) {
+  .lg\:max-w-2xs {
+    position: fixed;
+    top: 2.5rem; /* 与主题原 sticky 偏移 lg:top-10 一致 */
+    /* 左边缘对齐文章列右边缘（body max-w-7xl=80rem 居中 + lg:px-32=8rem），
+       窄屏时夹紧到视口内 1rem，避免面板被裁切 */
+    left: calc(min((100vw - 80rem) / 2 + 72rem, 100vw - 17rem));
+    z-index: 30;
+    width: 16rem;
+    max-width: 16rem;
+    background-color: rgb(var(--color-neutral-50));
+    border: 1px solid rgba(var(--color-neutral-200), 1);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+  .dark .lg\:max-w-2xs {
+    background-color: rgb(var(--color-neutral-800));
+    border-color: rgba(var(--color-neutral-700), 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  }
+
+  /* 展开时限制面板高度，目录过长时在面板内部滚动 */
+  .lg\:max-w-2xs details.toc-right[open] {
+    max-height: calc(100vh - 6rem);
+  }
+}
+
+/* 打印时隐藏悬浮目录面板（内层 .toc 已隐藏，外层固定容器需一并隐藏） */
+@media print {
+  .lg\:max-w-2xs {
+    display: none;
+  }
+}
+
+
+
