@@ -96,6 +96,106 @@
         });
       })();
     </script>
+    <script>
+      // mermaid 点击放大：点击图表打开全屏遮罩，以原生尺寸（完整分辨率）查看，
+      // 避免复杂大图被缩放导致文字模糊。渲染是异步的、明暗切换会重渲染，
+      // 故用 MutationObserver 兜底：源图被移除时自动关闭遮罩。
+      (function () {
+        function svgWidth(svg) {
+          var vb = svg.viewBox && svg.viewBox.baseVal;
+          if (vb && vb.width) return vb.width;
+          var attr = svg.getAttribute("viewBox");
+          if (!attr) return 0;
+          var parts = attr.trim().split(/[\s,]+/).map(Number);
+          return parts.length === 4 && isFinite(parts[2]) ? parts[2] : 0;
+        }
+
+        var overlay = null; // 当前遮罩层
+        var origSvg = null; // 当前放大的源 SVG
+
+        function closeOverlay() {
+          if (!overlay) return;
+          overlay.remove();
+          overlay = null;
+          origSvg = null;
+          document.body.classList.remove("mermaid-zoom-open");
+        }
+
+        function buildOverlay(svg) {
+          var o = document.createElement("div");
+          o.className = "mermaid-zoom-overlay";
+          o.setAttribute("role", "dialog");
+          o.setAttribute("aria-label", "图表放大预览");
+
+          var box = document.createElement("div");
+          box.className = "mermaid-zoom-box";
+
+          var close = document.createElement("button");
+          close.type = "button";
+          close.className = "mermaid-zoom-close";
+          close.setAttribute("aria-label", "关闭");
+          close.innerHTML =
+            '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+          var body = document.createElement("div");
+          body.className = "mermaid-zoom-body";
+          var clone = svg.cloneNode(true);
+          var w = svgWidth(svg);
+          if (w) {
+            clone.style.maxWidth = "none";
+            clone.style.width = w + "px";
+            clone.style.height = "auto";
+          }
+          body.appendChild(clone);
+
+          box.appendChild(close);
+          box.appendChild(body);
+          o.appendChild(box);
+
+          function onKey(e) {
+            if (e.key === "Escape") closeOverlay();
+          }
+          // 点击遮罩空白处或关闭按钮关闭
+          o.addEventListener("click", function (e) {
+            if (e.target === o || e.target === box) closeOverlay();
+          });
+          close.addEventListener("click", closeOverlay);
+          document.addEventListener("keydown", onKey, true);
+
+          document.body.appendChild(o);
+          overlay = o;
+          origSvg = svg;
+          document.body.classList.add("mermaid-zoom-open");
+        }
+
+        // 图表节点内嵌链接（<a>）时让链接正常工作，不触发放大
+        function isLinkTarget(node) {
+          while (node && node !== document.body) {
+            if (node.tagName === "A") return true;
+            node = node.parentNode;
+          }
+          return false;
+        }
+
+        // 事件委托：点击任意 pre.mermaid 打开放大
+        document.addEventListener("click", function (e) {
+          if (overlay) return; // 已有遮罩时忽略
+          var pre = e.target.closest ? e.target.closest("pre.mermaid") : null;
+          if (!pre) return;
+          if (isLinkTarget(e.target)) return;
+          var svg = pre.querySelector("svg");
+          if (!svg) return;
+          e.preventDefault();
+          buildOverlay(svg);
+        });
+
+        // 兜底：明暗切换/重渲染会替换源 SVG，检测到移除则自动关闭遮罩
+        var observer = new MutationObserver(function () {
+          if (overlay && origSvg && !document.contains(origSvg)) closeOverlay();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+      })();
+    </script>
   {{ end }}
   {{/* Extend footer - eg. for extra scripts, etc. */}}
   {{ if templates.Exists "partials/extend-footer.html" }}

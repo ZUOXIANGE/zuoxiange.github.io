@@ -14,7 +14,7 @@ mainSections = ['posts', 'notes']
 
 # 站点级背景（backgroundCanvas 将其固定为全站背景）
 defaultBackgroundImage = 'img/site-background.svg'
-backgroundCanvas = true
+backgroundCanvas = false
 # 社交分享默认图（OG / Twitter Card，无特色图时使用）
 defaultSocialImage = 'img/banner.png'
 
