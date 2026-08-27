@@ -37,6 +37,7 @@ Mise 的设计哲学是：通过一个 `mise.toml` 配置文件，让项目的�
 各平台的详细安装方式请参考[官方安装文档](https://mise.jdx.dev/installing-mise.html)。例如，Windows 用户推荐使用 Scoop 安装：
 
 ```bash
+# 使用管理员身份运行
 scoop install mise
 ```
 
@@ -47,6 +48,20 @@ scoop install mise
 ```bash
 mise --version
 ```
+
+### 3. Windows 专属配置：shims 与自动切换
+
+接下来是 Windows 下最关键的一步：把 mise 的 **shims 目录**添加到用户环境变量 PATH 中，才能实现「进入项目目录自动切换版本」。
+
+```powershell
+# 打印 shims 目录（一般是 ~\AppData\Local\mise\shims）
+echo "$env:USERPROFILE\AppData\Local\mise\shims"
+# 将 shims 目录添加到用户 PATH 最前面
+$shimPath = "$env:USERPROFILE\AppData\Local\mise\shims"
+[Environment]::SetEnvironmentVariable("PATH", $shimPath + ";" + [Environment]::GetEnvironmentVariable("PATH", "User"), "User")
+```
+
+配置完成后，再次重启终端，这个自动切换的配置就生效了。
 
 ## 核心功能一：管理 SDK 版本
 
@@ -194,6 +209,42 @@ Mise 的理念同样适用于 CI 环境。在你的 GitHub Actions、GitLab CI �
 ```
 
 这样做不仅简化了 CI 脚本，也大大提高了构建的缓存效率和可重复性。
+
+## 常用命令速查
+
+日常使用 Mise，记住下面这些高频命令就足够了：
+
+| 命令                        | 说明                                                  |
+| --------------------------- | ----------------------------------------------------- |
+| `mise --version`            | 查看 Mise 自身版本                                    |
+| `mise install`              | 安装当前项目 `mise.toml` 中配置的所有工具             |
+| `mise install java@21`      | 安装指定工具的指定版本                                |
+| `mise use node@24`          | 在当前目录锁定版本（生成 / 更新 `mise.toml`）         |
+| `mise use --global java@21` | 设置全局默认版本（写入 `~/.config/mise/config.toml`） |
+| `mise current`              | 查看当前目录正在使用的各工具版本                      |
+| `mise list`                 | 查看已安装的所有工具                                  |
+| `mise list java`            | 查看某个工具已安装的版本列表                          |
+| `mise list-remote node`     | 查看某个工具所有可用的远程版本                        |
+| `mise shell java@17`        | 临时切换版本（仅对当前终端生效）                      |
+| `mise uninstall java@21`    | 卸载指定版本                                          |
+| `mise run build`            | 运行 `mise.toml` 中定义的任务                         |
+| `mise env`                  | 打印当前生效的环境变量                                |
+| `mise doctor`               | 环境自检，排查配置异常                                |
+| `mise self-update`          | 更新 Mise 到最新版                                    |
+| `mise activate pwsh`        | 激活 shell 集成（写入 `$PROFILE` 实现自动加载）       |
+
+### 全局工具管理
+
+当使用 Mise 管理多 Node 版本时，全局工具建议统一交给 Mise 管理，避免 `npm install -g` 安装的 CLI 在切换版本后失效：
+
+```bash
+# 用 mise 安装全局工具（以 opencode 为例）
+mise use -g github:anomalyco/opencode
+# 更新全局工具
+mise upgrade -g github:anomalyco/opencode
+# 从 mise 中卸载全局工具
+mise uninstall -g opencode
+```
 
 ## 总结
 
