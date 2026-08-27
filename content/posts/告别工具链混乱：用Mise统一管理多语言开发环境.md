@@ -34,34 +34,92 @@ Mise 的设计哲学是：通过一个 `mise.toml` 配置文件，让项目的�
 
 ### 1. 安装 Mise
 
-各平台的详细安装方式请参考[官方安装文档](https://mise.jdx.dev/installing-mise.html)。例如，Windows 用户推荐使用 Scoop 安装：
+Windows 上官方推荐使用 [Scoop](https://scoop.sh/) 安装，它会**自动把 shims 目录加入 PATH**：
 
-```bash
-# 使用管理员身份运行
+```powershell
 scoop install mise
 ```
 
+其他可选的安装方式：
+
+*   **winget**：`winget install jdx.mise`
+*   **手动安装**：从 [GitHub Releases](https://github.com/jdx/mise/releases) 下载最新版并加入 PATH
+
+各平台更完整的安装说明见[官方安装文档](https://mise.jdx.dev/installing-mise.html)。
+
 ### 2. 验证安装
 
-运行以下命令，如果能看到版本信息，说明安装成功：
+打开**新的终端**，运行以下命令确认安装成功：
 
-```bash
+```powershell
 mise --version
 ```
 
-### 3. Windows 专属配置：shims 与自动切换
+如果提示找不到命令，说明 mise 或 shims 目录尚未加入 PATH，按下面第 4、5 节配置。
 
-接下来是 Windows 下最关键的一步：把 mise 的 **shims 目录**添加到用户环境变量 PATH 中，才能实现「进入项目目录自动切换版本」。
+### 3. 两种运行方式：shims 与 `mise activate`
+
+Mise 提供两种「自动加载工具」的方式（[官方说明](https://mise.jdx.dev/getting-started.html#activate-mise-optional)），Windows 下二选一即可：
+
+*   **使用 shims**：mise 会在 shims 目录（默认 `%LOCALAPPDATA%\mise\shims`）中放置与工具同名的小型可执行文件（可理解为指向 mise 的符号链接）。调用它们时，mise 会根据当前目录的 `mise.toml` 解析正确的工具版本与环境，**对 IDE、脚本、CI 等非交互场景最友好**。
+*   **不使用 shims（`mise activate` / PATH 激活）**：mise 在每次显示命令提示符时自动更新 PATH 和环境变量，**交互式终端下体验最佳**（例如 `echo $env:NODE_ENV` 能直接看到 `[env]` 里定义的变量）。
+
+也可以两者都不用，改用 `mise exec` / `mise run` 显式加载环境，适合只想在个别项目里使用 mise 的情况。
+
+两者的主要差异（[Shims vs PATH](https://mise.jdx.dev/dev-tools/shims.html#shims-vs-path)）：
+
+| 场景                    | shims              | `mise activate`        |
+| ----------------------- | ------------------ | ---------------------- |
+| CI、IDE、脚本（非交互） | ✅ 更合适           | ⚠️ 提示符不刷新时不生效 |
+| 交互式终端              | ✅ 可用             | ✅ 推荐                 |
+| `[env]` 定义的环境变量  | 仅对 mise 工具生效 | ✅ 直接导出到 shell     |
+| `which` 查看真实路径    | ⚠️ 指向 shim        | ✅ 显示真实路径         |
+
+### 4. 方式一：使用 shims
+
+**用 Scoop 安装后无需任何配置**——Scoop 的安装清单已自动把 shims 目录加入 PATH，直接进入下一步即可。
+
+若是手动安装，则需要把 shims 目录加入用户 PATH（PowerShell 中运行）：
 
 ```powershell
-# 打印 shims 目录（一般是 ~\AppData\Local\mise\shims）
-echo "$env:USERPROFILE\AppData\Local\mise\shims"
+# 打印 shims 目录（默认 %LOCALAPPDATA%\mise\shims）
+echo "$env:LOCALAPPDATA\mise\shims"
 # 将 shims 目录添加到用户 PATH 最前面
-$shimPath = "$env:USERPROFILE\AppData\Local\mise\shims"
+$shimPath = "$env:LOCALAPPDATA\mise\shims"
 [Environment]::SetEnvironmentVariable("PATH", $shimPath + ";" + [Environment]::GetEnvironmentVariable("PATH", "User"), "User")
 ```
 
-配置完成后，再次重启终端，这个自动切换的配置就生效了。
+更规范的替代做法是在 PowerShell 配置文件（`$PROFILE`）中调用 `mise activate --shims`，由 mise 自行维护 shims 目录：
+
+```powershell
+echo '(&mise activate pwsh --shims) | Out-String | Invoke-Expression' >> $HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+```
+
+### 5. 方式二：不使用 shims（`mise activate` / PATH 激活）
+
+在 PowerShell 配置文件（默认 `$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`，可用 `echo $PROFILE` 查看实际路径）中追加激活命令：
+
+```powershell
+echo '(&mise activate pwsh) | Out-String | Invoke-Expression' >> $HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+```
+
+如果提示目录不存在，先创建配置文件所在目录，再执行上面的命令：
+
+```powershell
+New-Item -ItemType Directory -Force -Path $HOME\Documents\PowerShell
+```
+
+> **注意**：若 `$PROFILE` 指向其他路径，请以实际路径为准。
+
+### 6. 重启终端验证
+
+任选一种方式配置完成后，**重启终端**，运行 `mise doctor` 检查环境是否就绪：
+
+```powershell
+mise doctor
+```
+
+确认无报错后，就可以进入下一节用 Mise 管理 SDK 了。
 
 ## 核心功能一：管理 SDK 版本
 
