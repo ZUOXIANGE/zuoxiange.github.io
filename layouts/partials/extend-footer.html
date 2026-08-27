@@ -17,20 +17,39 @@
       return LANG_NAMES[lang.toLowerCase()] || lang.toUpperCase();
     }
 
+    var DOT_COLORS = ["red", "yellow", "green"];
+
+    /* VS Code 窗口红黄绿圆点 */
+    function addWindowDots(title) {
+      if (title.querySelector(".window-dots")) return;
+      var dots = document.createElement("span");
+      dots.className = "window-dots";
+      dots.setAttribute("aria-hidden", "true");
+      DOT_COLORS.forEach(function (color) {
+        var dot = document.createElement("span");
+        dot.className = "window-dot window-dot-" + color;
+        dots.appendChild(dot);
+      });
+      title.insertBefore(dots, title.firstChild);
+    }
+
     function decorate() {
       document.querySelectorAll(".highlight-wrapper").forEach(function (wrapper) {
-        if (wrapper.querySelector(".codeblock-title")) return;
-        var code = wrapper.querySelector("code[data-lang]");
-        if (!code) return;
-        var label = langLabel(code.getAttribute("data-lang"));
-        if (!label) return;
-        var title = document.createElement("div");
-        title.className = "codeblock-title";
-        var span = document.createElement("span");
-        span.className = "codeblock-lang";
-        span.textContent = label;
-        title.appendChild(span);
-        wrapper.insertBefore(title, wrapper.firstChild);
+        var title = wrapper.querySelector(".codeblock-title");
+        if (!title) {
+          var code = wrapper.querySelector("code[data-lang]");
+          if (!code) return;
+          var label = langLabel(code.getAttribute("data-lang"));
+          if (!label) return;
+          title = document.createElement("div");
+          title.className = "codeblock-title";
+          var span = document.createElement("span");
+          span.className = "codeblock-lang";
+          span.textContent = label;
+          title.appendChild(span);
+          wrapper.insertBefore(title, wrapper.firstChild);
+        }
+        addWindowDots(title);
       });
     }
 

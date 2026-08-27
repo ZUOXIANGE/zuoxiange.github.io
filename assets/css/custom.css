@@ -10,14 +10,15 @@
     "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
-/* 2) 代码块容器：细边框 + 柔和阴影 */
+/* 2) 代码块容器：VS Code 编辑器窗口（扁平面板，细边框 + 极浅阴影） */
 .highlight-wrapper {
-  border: 1px solid rgba(var(--color-neutral-200), 1);
+  border: 1px solid #d9d9d9;
   border-radius: 0.5rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 .dark .highlight-wrapper {
-  border-color: rgba(var(--color-neutral-800), 1);
+  border-color: #3c3c3c;
+  background-color: #1e1e1e;
 }
 
 /* 3) 代码区：内边距与横向滚动（长代码不裁切，可滚动查看） */
@@ -52,43 +53,52 @@
   -webkit-user-select: none;
 }
 
-/* 5) 语言标签栏 */
+/* 5) 语言标签栏：VS Code 标题栏（红黄绿圆点 + 语言标签） */
 .codeblock-title {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  gap: 0.6rem;
+  padding: 0.45rem 0.75rem;
   font-family: inherit;
   font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: rgba(var(--color-neutral-500), 1);
-  background: rgba(var(--color-neutral-50), 1);
+  color: #444444;
+  background: #f3f3f3;
+  border-bottom: 1px solid #d9d9d9;
 }
 .dark .codeblock-title {
-  color: #8b949e;
-  background: #0d1117;
-  border-bottom: 1px solid #30363d;
+  color: #cccccc;
+  background: #252526;
+  border-bottom: 1px solid #1e1e1e;
 }
 .codeblock-lang {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
   text-transform: uppercase;
 }
-.codeblock-lang::before {
-  content: "";
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 9999px;
-  background: rgba(var(--color-primary-500), 1);
-}
 
-/* 6) 复制按钮：标签栏右上角小胶囊（保持悬停显示） */
+/* VS Code 窗口红黄绿圆点 */
+.window-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.window-dot {
+  display: inline-block;
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 9999px;
+}
+.window-dot-red { background-color: #ff5f57; }
+.window-dot-yellow { background-color: #febc2e; }
+.window-dot-green { background-color: #28c840; }
+
+/* 6) 复制按钮：标题栏右上角小胶囊（保持悬停显示） */
 .copy-button {
   visibility: hidden;
-  top: 0.3rem;
-  right: 0.4rem;
+  top: 0.45rem;
+  right: 0.5rem;
   width: auto;
   height: auto;
   padding: 0.15rem 0.6rem;
@@ -119,9 +129,114 @@
 }
 
 /* ============================================================
-   深色模式高亮：沿用主题内置 GitHub Dark（#0d1117 背景）
-   此前用 One Dark 覆盖，现移除使深浅两套统一为 GitHub 观感
+   VS Code 语法配色
+   - 亮色：Light+（白底）
+   - 深色：Dark+（#1e1e1e 背景）
+   覆盖主题内置的 GitHub Light / GitHub Dark 配色
    ============================================================ */
+
+/* ---------- 亮色 Light+ ---------- */
+.chroma { color: #000000; background-color: #ffffff; }
+.chroma .err { color: #cd3131; }
+.chroma .k, .chroma .kd, .chroma .kn, .chroma .kp, .chroma .kr { color: #af00db; }
+.chroma .kc, .chroma .kt { color: #0000ff; }
+.chroma .nc, .chroma .nn { color: #267f99; }
+.chroma .no { color: #098658; }
+.chroma .nd { color: #af00db; }
+.chroma .ni { color: #267f99; }
+.chroma .ne { color: #800000; }
+.chroma .nl { color: #001080; }
+.chroma .nt { color: #800000; }
+.chroma .nb { color: #795e26; }
+.chroma .bp { color: #001080; }
+.chroma .py { color: #001080; }
+.chroma .nv, .chroma .vc, .chroma .vg, .chroma .vi, .chroma .vm { color: #001080; }
+.chroma .nf, .chroma .fm { color: #795e26; }
+.chroma .s, .chroma .sa, .chroma .sb, .chroma .sc, .chroma .sd,
+.chroma .s1, .chroma .s2, .chroma .sh, .chroma .si, .chroma .sx,
+.chroma .sr, .chroma .ss, .chroma .dl { color: #a31515; }
+.chroma .se { color: #a31515; }
+.chroma .m, .chroma .mb, .chroma .mf, .chroma .mh,
+.chroma .mi, .chroma .il, .chroma .mo { color: #098658; }
+.chroma .o { color: #000000; }
+.chroma .ow { color: #af00db; }
+.chroma .p { color: #000000; }
+.chroma .c, .chroma .ch, .chroma .cm, .chroma .c1,
+.chroma .cs, .chroma .cp, .chroma .cpf { color: #008000; font-style: italic; }
+.chroma .gd { color: #cd3131; background-color: #fff0f0; }
+.chroma .gi { color: #108040; background-color: #f0fff0; }
+.chroma .hl { background-color: #e6e6e6; }
+.chroma .ln { color: #6e7681; }
+.chroma .w { color: #000000; }
+
+/* ---------- 深色 Dark+ ---------- */
+.dark .chroma { color: #d4d4d4; background-color: #1e1e1e; }
+.dark .chroma .err { color: #f48771; }
+.dark .chroma .k, .dark .chroma .kd, .dark .chroma .kn,
+.dark .chroma .kp, .dark .chroma .kr { color: #c586c0; }
+.dark .chroma .kc, .dark .chroma .kt { color: #569cd6; }
+.dark .chroma .nc, .dark .chroma .ne, .dark .chroma .nn { color: #4ec9b0; }
+.dark .chroma .no { color: #b5cea8; }
+.dark .chroma .nd { color: #c586c0; }
+.dark .chroma .ni { color: #9cdcfe; }
+.dark .chroma .nl { color: #9cdcfe; }
+.dark .chroma .nt, .dark .chroma .nb { color: #569cd6; }
+.dark .chroma .bp, .dark .chroma .py { color: #9cdcfe; }
+.dark .chroma .nv, .dark .chroma .vc, .dark .chroma .vg,
+.dark .chroma .vi, .dark .chroma .vm { color: #9cdcfe; }
+.dark .chroma .nf, .dark .chroma .fm { color: #dcdcaa; }
+.dark .chroma .s, .dark .chroma .sa, .dark .chroma .sb, .dark .chroma .sc,
+.dark .chroma .sd, .dark .chroma .s1, .dark .chroma .s2, .dark .chroma .sh,
+.dark .chroma .si, .dark .chroma .sx, .dark .chroma .sr,
+.dark .chroma .ss, .dark .chroma .dl { color: #ce9178; }
+.dark .chroma .se { color: #d7ba7d; }
+.dark .chroma .m, .dark .chroma .mb, .dark .chroma .mf, .dark .chroma .mh,
+.dark .chroma .mi, .dark .chroma .il, .dark .chroma .mo { color: #b5cea8; }
+.dark .chroma .o { color: #d4d4d4; }
+.dark .chroma .ow { color: #c586c0; }
+.dark .chroma .p { color: #d4d4d4; }
+.dark .chroma .c, .dark .chroma .ch, .dark .chroma .cm, .dark .chroma .c1,
+.dark .chroma .cs, .dark .chroma .cp, .dark .chroma .cpf { color: #6a9955; font-style: italic; }
+.dark .chroma .gd { color: #f14c4c; background-color: #3d1f1f; }
+.dark .chroma .gi { color: #89d185; background-color: #123512; }
+.dark .chroma .gr { color: #f14c4c; }
+.dark .chroma .go { color: #808080; }
+.dark .chroma .hl { background-color: rgba(255, 255, 255, 0.06); }
+.dark .chroma .ln { color: #858585; }
+.dark .chroma .w { color: #d4d4d4; }
+
+/* ---------- 补齐遗漏 token（防止回落到 GitHub 配色） ---------- */
+/* Name 基础/其他：未分类标识符、配置键（TOML/YAML 等）→ 前景色 */
+.chroma .n, .chroma .nx { color: #000000; }
+.dark .chroma .n, .dark .chroma .nx { color: #d4d4d4; }
+/* NameAttribute：成员/方法调用 → 函数色 */
+.chroma .na { color: #795e26; }
+.dark .chroma .na { color: #dcdcaa; }
+/* Literal：字面量（如 YAML 值）→ 字符串色；LiteralDate → 数字色 */
+.chroma .l { color: #a31515; }
+.chroma .ld { color: #098658; }
+.dark .chroma .l { color: #ce9178; }
+.dark .chroma .ld { color: #b5cea8; }
+/* 行号表格模式（站点用内联行号，此处兜底防遗漏） */
+.chroma .lnt { color: #6e7681; }
+.dark .chroma .lnt { color: #858585; }
+/* Background（旧版 chroma 输出，防遗漏） */
+.chroma .bg { color: #000000; background-color: #ffffff; }
+.dark .chroma .bg { color: #d4d4d4; background-color: #1e1e1e; }
+/* 补齐亮色 .go 及各类 Generic token */
+.chroma .go { color: #000000; }
+.chroma .ge { color: #000000; font-style: italic; }
+.chroma .gh, .chroma .gu { color: #0000ff; }
+.chroma .gp { color: #000000; }
+.chroma .gs { font-weight: bold; }
+.chroma .gt, .chroma .gr { color: #cd3131; }
+.chroma .gl { text-decoration: underline; }
+.dark .chroma .ge { color: #d4d4d4; font-style: italic; }
+.dark .chroma .gh, .dark .chroma .gu { color: #569cd6; }
+.dark .chroma .gp { color: #a8a8a8; }
+.dark .chroma .gs { font-weight: bold; }
+.dark .chroma .gt { color: #f14c4c; }
+.dark .chroma .gl { text-decoration: underline; }
 
 /* ============================================================
    giscus 评论框：与文章内容列同宽（容器已受 max-w-prose 约束）
