@@ -1,0 +1,39 @@
+content/posts/代码只是业务的映射.md
+  h_3bce1a600ef4c9 8-10,12,14,20,25,27,29,32,35,37,45,48,50,70,73,78,81,83,91,97,101,105,108,114,117,119,121,128,135,137,139,141,143
+  s_c698338fc3542d::t_d649c6ddd35d27 1-7,13,15-19,21-24,26,28,30-31,33-34,36,38-44,46-47,49,51-69,71-72,74-77,79-80,82,84-90,92-96,98-100,102-104,106-107,109-113,115-116,118,120,122-127,129-134,136,138,140,142,144
+  s_c698338fc3542d::t_1483269d012a0d 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "db611bb9af470f61390aad193247c18a97d9549e",
+  "prompts": {},
+  "humans": {
+    "h_3bce1a600ef4c9": {
+      "author": "ZUOXIANG <zuoxiang42@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_c698338fc3542d": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a94e808fa426a07bd7bd5bd",
+        "model": "glm-5.3-flash__dev"
+      },
+      "human_author": "ZUOXIANG <zuoxiang42@gmail.com>",
+      "custom_attributes": {
+        "runtime_client": "trae-tob-git-ai",
+        "session_id": "6a94e808fa426a07bd7bd5bd",
+        "dedupe_key": "6a94e808fa426a07bd7bd5bd:6a951a4947d9fe750a7b5cea:afterEdit:75ce1eaa",
+        "external_session_id": "6a94e808fa426a07bd7bd5bd",
+        "tool_use_id": "6a951a4947d9fe750a7b5cea",
+        "source_scene": "unknown",
+        "tool_type": "agent",
+        "edit_kind": "file_edit",
+        "client_type": "ide",
+        "operation_id": "6a951a4947d9fe750a7b5cea",
+        "tool_id": "Edit"
+      }
+    }
+  }
+}
