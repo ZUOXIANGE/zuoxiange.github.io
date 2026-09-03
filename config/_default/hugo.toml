@@ -31,8 +31,20 @@ enableEmoji = true
   filename = 'sitemap.xml'
   priority = 0.5
 
+# 为每篇文章额外输出一份 Markdown 原文（用于「下载本文」功能）
+[mediaTypes]
+  [mediaTypes.'text/markdown']
+    suffixes = ['md']
+
+[outputFormats]
+  [outputFormats.MD]
+    mediaType = 'text/markdown'
+    isPlainText = true
+    notAlternative = true
+
 [outputs]
   home = ['HTML', 'RSS', 'JSON']
+  page = ['HTML', 'MD']
 
 [related]
   threshold = 0
