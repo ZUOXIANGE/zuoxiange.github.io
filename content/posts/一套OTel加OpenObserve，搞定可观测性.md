@@ -1,8 +1,9 @@
 +++
 date = '2026-09-15T16:50:00+08:00'
 draft = false
-title = '可观测性工程实践：日志、指标与链路的统一落地'
-slug = 'observability-engineering-practice-logs-metrics-traces'
+title = '一套OTel加OpenObserve，搞定可观测性'
+slug = 'otel-openobserve-observability'
+aliases = ['/posts/observability-engineering-practice-logs-metrics-traces/']
 description = '从可观测性三大支柱（日志、指标、链路追踪）的工程实践出发，剖析每根支柱该采集什么、怎么采集、怎么关联，并以 OpenObserve 为例展示如何用统一平台落地整套可观测性体系。'
 categories = ['后端开发']
 tags = ['可观测性', 'OpenTelemetry', 'OpenObserve', '运维']

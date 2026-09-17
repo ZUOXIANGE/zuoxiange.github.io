@@ -1,7 +1,7 @@
 +++
 date = '2026-08-27T09:31:09+08:00'
 draft = false
-title = '告别工具链混乱：用Mise统一管理多语言开发环境'
+title = '用Mise统一管理多语言开发环境'
 slug = 'mise-unified-dev-environment'
 description = 'Mise 是一个基于 Rust 的统一开发环境管理工具，用一个配置文件即可管理多语言 SDK、环境变量和项目任务，替代 nvm、pyenv、jenv 等碎片化工具链。'
 categories = ['开发工具']
