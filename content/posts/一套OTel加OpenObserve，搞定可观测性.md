@@ -10,6 +10,7 @@ tags = ['可观测性', 'OpenTelemetry', 'OpenObserve', '运维']
 +++
 
 系统上线之后，最危险的状态不是"报警响了"，而是"出了问题却看不见问题在哪"。可观测性（Observability）要解决的就是这个问题：让系统的外部输出足以解释其内部状态，使团队能够在不修改代码的前提下，通过观察输出来定位和诊断异常行为。
+![OpenObserve 统一可观测性平台](/img/openobserve-platform.png)
 
 可观测性通常被归纳为三大支柱：日志（Logs）、指标（Metrics）、链路追踪（Traces）。三者各有分工，缺一不可。这篇文章从工程实践的角度，逐一拆解每根支柱该怎么做，核心主张只有一个：**三大支柱统一用 OpenTelemetry 采集，后端统一落到 OpenObserve 这一个平台上**——不再拼凑 Prometheus、ELK、Grafana 等多套工具链。
 
