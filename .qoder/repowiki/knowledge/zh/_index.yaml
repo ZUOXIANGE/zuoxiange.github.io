@@ -1,0 +1,58 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: zh-CN
+branch: main
+nodes_managed: true
+exported_at: "2026-11-23T02:59:22Z"
+modules:
+    "":
+        dir_name: ZUOXIANGE 个人技术博客（Hugo + Blowfish）
+        title: ZUOXIANGE 个人技术博客（Hugo + Blowfish）
+        scope:
+            - README.md
+            - AGENTS.md
+            - .gitignore
+            - .gitmodules
+            - .hugo-version
+        source_files: []
+        children:
+            - dev_scripts_and_ci
+            - site_content_and_config
+            - site_layouts_and_assets
+        depends_on: []
+        related_to: []
+    dev_scripts_and_ci:
+        dir_name: 开发脚本与 GitHub Actions CI_CD
+        title: 开发脚本与 GitHub Actions CI/CD
+        scope:
+            - scripts/
+            - .github/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: site_content_and_config
+            - path: site_layouts_and_assets
+    site_content_and_config:
+        dir_name: Hugo 站点内容与配置
+        title: Hugo 站点内容与配置
+        scope:
+            - config/
+            - content/
+            - archetypes/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: dev_scripts_and_ci
+    site_layouts_and_assets:
+        dir_name: 站点布局与静态资源覆盖层
+        title: 站点布局与静态资源覆盖层
+        scope:
+            - layouts/
+            - assets/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: dev_scripts_and_ci

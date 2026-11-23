@@ -1,0 +1,11 @@
+schema_version: 1
+module_path: site_content_and_config
+title: Hugo 站点内容与配置
+scope:
+    - config/
+    - content/
+    - archetypes/
+source_files: []
+depends_on: []
+related_to:
+    - path: dev_scripts_and_ci

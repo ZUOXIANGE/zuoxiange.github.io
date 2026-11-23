@@ -1,0 +1,11 @@
+schema_version: 1
+module_path: dev_scripts_and_ci
+title: 开发脚本与 GitHub Actions CI/CD
+scope:
+    - scripts/
+    - .github/
+source_files: []
+depends_on: []
+related_to:
+    - path: site_content_and_config
+    - path: site_layouts_and_assets

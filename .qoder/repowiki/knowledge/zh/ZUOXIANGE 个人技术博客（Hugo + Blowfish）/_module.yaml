@@ -1,0 +1,12 @@
+schema_version: 1
+module_path: ""
+title: ZUOXIANGE 个人技术博客（Hugo + Blowfish）
+scope:
+    - README.md
+    - AGENTS.md
+    - .gitignore
+    - .gitmodules
+    - .hugo-version
+source_files: []
+depends_on: []
+related_to: []
